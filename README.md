@@ -1,9 +1,17 @@
 # OddGame.io Game Server
 
+## Prerequisites
+
+Go: https://golang.org/doc/install
+Protoc: https://github.com/golang/protobuf
+
 ## Development
 
 - Install [Go](https://golang.org/) and [Docker](https://docs.docker.com/install/).
+- Install [gRPC](https://grpc.io/docs/quickstart/go/) `go get google.golang.org/grpc@v1.28.1`
+- Install protobuf for MacOS `brew install protobuf`
 - Run `docker-compose up mongo -d` to start MongoDB in background (or you can start with local MongoDB).
+- Run `make depend` to install dependencies
 - Run `go run ./cmd/server/main.go` to start development.
 
 ## Production
