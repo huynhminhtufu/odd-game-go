@@ -11,6 +11,7 @@ import (
 	"github.com/oddx-team/odd-game-server/config"
 	pb "github.com/oddx-team/odd-game-server/pb"
 	"github.com/oddx-team/odd-game-server/pkg/utils"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
 
@@ -42,6 +43,9 @@ func (s *Server) runGRPCGateway() (err error) {
 	}
 
 	muxHttp := http.NewServeMux()
+	muxHttp.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
+		promhttp.Handler().ServeHTTP(w, r)
+	})
 	muxHttp.Handle("/", utils.ForwardAccessToken(mux))
 
 	log.Println("Started HTTP server at port " + strconv.Itoa(s.cfg.HttpAddress))
