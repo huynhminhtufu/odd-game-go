@@ -11,4 +11,6 @@ require (
 	github.com/spf13/viper v1.7.0
 	go.mongodb.org/mongo-driver v1.3.3
 	google.golang.org/grpc v1.29.1
+	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
+	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 )

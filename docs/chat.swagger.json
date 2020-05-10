@@ -10,57 +10,8 @@
   "produces": [
     "application/json"
   ],
-  "paths": {
-    "/chats": {
-      "get": {
-        "operationId": "Chat_GetChats",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/protoGetChatsResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "tags": [
-          "Chat"
-        ]
-      }
-    }
-  },
+  "paths": {},
   "definitions": {
-    "protoChatEntity": {
-      "type": "object",
-      "properties": {
-        "user": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        },
-        "time": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
-    "protoGetChatsResponse": {
-      "type": "object",
-      "properties": {
-        "chats": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/protoChatEntity"
-          }
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
