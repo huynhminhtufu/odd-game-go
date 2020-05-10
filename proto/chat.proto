@@ -1,0 +1,28 @@
+syntax = "proto3";
+package proto;
+
+import "google/api/annotations.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.marshaler_all) = true;
+
+message ChatEntity {
+  string user = 1;
+  string message = 2;
+  uint32 time = 3;
+}
+
+message GetChatsRequest {}
+
+message GetChatsResponse {
+  repeated ChatEntity chats = 1;
+}
+
+service Chat {
+  rpc GetChats(GetChatsRequest) returns (GetChatsResponse) {
+    option (google.api.http) = { get: "/chats" };
+  }
+}

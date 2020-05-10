@@ -1,0 +1,38 @@
+syntax = "proto3";
+package proto;
+
+import "google/api/annotations.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.marshaler_all) = true;
+
+message UserEntity {
+  string email = 1;
+  string name = 2;
+}
+
+message GetUsersRequest {}
+
+message GetUsersResponse {
+  repeated UserEntity users = 1;
+}
+
+message GetUserRequest {
+  string email = 1;
+}
+
+message GetUserResponse {
+  UserEntity user = 1;
+}
+
+service User {
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
+    option (google.api.http) = { get: "/users" };
+  }
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = { get: "/user" };
+  }
+}

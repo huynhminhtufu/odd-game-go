@@ -1,0 +1,5 @@
+grpc_port: 4000
+http_port: 5000
+mongo:
+  host: mongodb://localhost:27017
+  database_name: odd-game
