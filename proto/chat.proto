@@ -1,5 +1,5 @@
 syntax = "proto3";
-package proto;
+package pb;
 
 import "google/api/annotations.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
@@ -19,10 +19,4 @@ message GetChatsRequest {}
 
 message GetChatsResponse {
   repeated ChatEntity chats = 1;
-}
-
-service Chat {
-  rpc GetChats(GetChatsRequest) returns (GetChatsResponse) {
-    option (google.api.http) = { get: "/chats" };
-  }
 }

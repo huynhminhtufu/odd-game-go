@@ -1,5 +1,5 @@
 syntax = "proto3";
-package proto;
+package pb;
 
 import "google/api/annotations.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
@@ -26,13 +26,4 @@ message GetUserRequest {
 
 message GetUserResponse {
   UserEntity user = 1;
-}
-
-service User {
-  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
-    option (google.api.http) = { get: "/users" };
-  }
-  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-    option (google.api.http) = { get: "/user" };
-  }
 }

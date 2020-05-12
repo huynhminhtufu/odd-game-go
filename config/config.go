@@ -7,9 +7,9 @@ import (
 )
 
 type Config struct {
-	GrpcPort 	int `yaml:"grpc_port" mapstructure:"grpc_port"`
-	HttpPort  	int `yaml:"http_port" mapstructure:"http_port"`
-	Mongo 		Mongo  `yaml:"mongo" mapstructure:"mongo"`
+	GRPCAddress int   `yaml:"grpc_address" mapstructure:"grpc_address"`
+	HttpAddress int   `yaml:"http_address" mapstructure:"http_address"`
+	Mongo       Mongo `yaml:"mongo" mapstructure:"mongo"`
 }
 
 type Mongo struct {
