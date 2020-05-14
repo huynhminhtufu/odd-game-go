@@ -25,7 +25,7 @@ type service struct {
 	readinessCheck ReadinessCheck
 }
 
-func New(config *config.Config) *service {
+func NewService(config *config.Config) *service {
 	return &service{
 		isReady:        true,
 		cfg:            config,
