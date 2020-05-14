@@ -7,8 +7,13 @@ import (
 	"time"
 
 	"github.com/oddx-team/odd-game-server/config"
+	"github.com/oddx-team/odd-game-server/l"
 	"github.com/oddx-team/odd-game-server/pb"
 	"google.golang.org/grpc"
+)
+
+var (
+	ll = l.New()
 )
 
 func main() {
@@ -22,7 +27,7 @@ func main() {
 	)
 
 	if err != nil {
-		log.Fatalln("Failed to dial server:", err)
+		ll.Fatal("Failed to dial server:", l.Error(err))
 	}
 
 	defer conn.Close()
