@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// This is a middleware
 func ForwardAccessToken(next http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		md := make(metadata.MD)
