@@ -14,64 +14,64 @@ option (gogoproto.equal_all) = true;
 option (gogoproto.marshaler_all) = true;
 
 service Odd {
-    rpc Version(VersionRequest) returns (VersionResponse) {
-        option (google.api.http) = {
-            get: "/version",
-        };
-    }
+  rpc Version(VersionRequest) returns (VersionResponse) {
+    option (google.api.http) = {
+      get: "/version",
+    };
+  }
 
-    rpc Liveness(LivenessRequest) returns (LivenessResponse) {
-      option (google.api.http) = {
-          get: "/headth"
-      };
-    }
+  rpc Liveness(LivenessRequest) returns (LivenessResponse) {
+    option (google.api.http) = {
+      get: "/health"
+    };
+  }
 
-    rpc ToggleReadiness(ToggleReadinessRequest) returns (ToggleReadinessResponse) {
-        option (google.api.http) = {
-            post: "/ready"
-        };
-    }
+  rpc ToggleReadiness(ToggleReadinessRequest) returns (ToggleReadinessResponse) {
+    option (google.api.http) = {
+      post: "/ready"
+    };
+  }
 
-    rpc Readiness(ReadinessRequest) returns (ReadinessResponse) {
-        option (google.api.http) = {
-            get: "/ready"
-        };
-    }
+  rpc Readiness(ReadinessRequest) returns (ReadinessResponse) {
+    option (google.api.http) = {
+      get: "/ready"
+    };
+  }
 
-    rpc GetChats(GetChatsRequest) returns (GetChatsResponse) {
-        option (google.api.http) = { get: "/chats" };
-    }
+  rpc GetChats(GetChatsRequest) returns (GetChatsResponse) {
+    option (google.api.http) = {get: "/chats"};
+  }
 
-    rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
-        option (google.api.http) = { get: "/users" };
-    }
-    rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-        option (google.api.http) = { get: "/user" };
-    }
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
+    option (google.api.http) = {get: "/users"};
+  }
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {get: "/user"};
+  }
 }
 
 message LivenessRequest {}
 
 message LivenessResponse {
-    string message = 1 [json_name="message"];
+  string message = 1 [json_name = "message"];
 }
 
 message ToggleReadinessRequest {}
 
 message ToggleReadinessResponse {
-    string message = 1 [json_name="message"];
+  string message = 1 [json_name = "message"];
 }
 
 message ReadinessRequest {}
 
 message ReadinessResponse {
-    string message = 1 [json_name="message"];
+  string message = 1 [json_name = "message"];
 }
 
 message VersionRequest {
 }
 
 message VersionResponse {
-    string version = 1;
+  string version = 1;
 }
 

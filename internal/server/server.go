@@ -1,26 +1,23 @@
-package main
+package server
 
 import (
 	"context"
 	"fmt"
-	"log"
-	"net/http"
-	"strconv"
-
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/oddx-team/odd-game-server/config"
-	pb "github.com/oddx-team/odd-game-server/pb"
+	"github.com/oddx-team/odd-game-server/pb"
 	"github.com/oddx-team/odd-game-server/pkg/utils"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
+	"net/http"
 )
 
 type Server struct {
 	http.Server
 	cfg          *config.Config
-	Addrs        []string // addresses on which the server listens for new connection.
-	inShutdown   uint32   // indicates whether the server is in shutdown or not
-	requestCount int32    // counter holds no. of request in progress.
+	Addrs        []string // Addresses on which the server listens for new connection
+	inShutdown   uint32   // Indicates whether the server is in shutdown or not
+	requestCount int32    // Counter holds no. of request in progress
 }
 
 func NewServer(cfg *config.Config) *Server {
@@ -29,7 +26,7 @@ func NewServer(cfg *config.Config) *Server {
 	}
 }
 
-func (s *Server) runGRPCGateway() (err error) {
+func (s *Server) RunGRPCGateway() (err error) {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -48,6 +45,5 @@ func (s *Server) runGRPCGateway() (err error) {
 	})
 	muxHttp.Handle("/", utils.ForwardAccessToken(mux))
 
-	log.Println("Started HTTP server at port " + strconv.Itoa(s.cfg.HttpAddress))
 	return http.ListenAndServe(fmt.Sprintf(":%d", s.cfg.HttpAddress), muxHttp)
 }

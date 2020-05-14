@@ -3,6 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	grpcmiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpcprometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/oddx-team/odd-game-server/config"
+	"github.com/oddx-team/odd-game-server/internal/server"
+	"github.com/oddx-team/odd-game-server/internal/services"
+	"github.com/oddx-team/odd-game-server/pb"
 	"log"
 	"net"
 	"os"
@@ -11,32 +17,27 @@ import (
 	"syscall"
 	"time"
 
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
-	"github.com/oddx-team/odd-game-server/config"
-	pb "github.com/oddx-team/odd-game-server/pb"
-
 	"google.golang.org/grpc"
 )
 
 func main() {
 	cfg := config.Load()
 
-	//grpc server
+	// gRPC server
 	s := grpc.NewServer(
-		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			grpc_prometheus.UnaryServerInterceptor,
+		grpc.UnaryInterceptor(grpcmiddleware.ChainUnaryServer(
+			grpcprometheus.UnaryServerInterceptor,
 		)),
 	)
 
-	// Register Prometheus metrics handler.
-	grpc_prometheus.EnableHandlingTimeHistogram()
-	grpc_prometheus.Register(s)
+	// Register Prometheus metrics handler
+	grpcprometheus.EnableHandlingTimeHistogram()
+	grpcprometheus.Register(s)
 
-	svc := registerService(cfg)
+	svc := services.New(cfg)
 	pb.RegisterOddServer(s, svc)
 
-	// handle signal
+	// Handle signal
 	_, ctxCancel := context.WithCancel(context.Background())
 	go func() {
 		osSignal := make(chan os.Signal, 1)
@@ -45,17 +46,17 @@ func main() {
 		ctxCancel()
 		// Wait for maximum 15s
 		go func() {
-			var durationSec time.Duration = 15
-			timer := time.NewTimer(durationSec * time.Second)
+			var duration time.Duration = 15
+			timer := time.NewTimer(duration * time.Second)
 			<-timer.C
-			log.Fatal("Force shutdown due to timeout!")
+			log.Fatal("Force shutdown due to timeout")
 		}()
 	}()
 
 	go func() {
-		gw := NewServer(cfg)
-		fmt.Println("HTTP server start listening", fmt.Sprintf("HTTP address: %d", cfg.HttpAddress))
-		err := gw.runGRPCGateway()
+		gw := server.NewServer(cfg)
+		log.Println("Started HTTP server at port " + strconv.Itoa(cfg.HttpAddress))
+		err := gw.RunGRPCGateway()
 		if err != nil {
 			log.Println("Cannot start server")
 			return
@@ -65,7 +66,7 @@ func main() {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.GRPCAddress))
 	log.Println("Started gRPC server at port " + strconv.Itoa(cfg.GRPCAddress))
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("Failed to listen: %v", err)
 	}
 
 	if err := s.Serve(lis); err != nil {
