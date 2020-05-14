@@ -34,7 +34,7 @@ func main() {
 	grpcprometheus.EnableHandlingTimeHistogram()
 	grpcprometheus.Register(s)
 
-	svc := services.New(cfg)
+	svc := services.NewService(cfg)
 	pb.RegisterOddServer(s, svc)
 
 	// Handle signal

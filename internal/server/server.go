@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-type Server struct {
+type server struct {
 	http.Server
 	cfg          *config.Config
 	Addrs        []string // Addresses on which the server listens for new connection
@@ -20,13 +20,13 @@ type Server struct {
 	requestCount int32    // Counter holds no. of request in progress
 }
 
-func NewServer(cfg *config.Config) *Server {
-	return &Server{
+func NewServer(cfg *config.Config) *server {
+	return &server{
 		cfg: cfg,
 	}
 }
 
-func (s *Server) RunGRPCGateway() (err error) {
+func (s *server) runGRPCGateway() (err error) {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
