@@ -26,7 +26,7 @@ func NewServer(cfg *config.Config) *server {
 	}
 }
 
-func (s *server) runGRPCGateway() (err error) {
+func (s *server) RunGRPCGateway() (err error) {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
