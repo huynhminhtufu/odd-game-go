@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/oddx-team/odd-game-server/config"
-	"github.com/oddx-team/odd-game-server/l"
 	"github.com/oddx-team/odd-game-server/pb"
+	"github.com/oddx-team/odd-game-server/pkg/l"
 	"google.golang.org/grpc"
 )
 

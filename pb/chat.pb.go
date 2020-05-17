@@ -28,7 +28,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type ChatEntity struct {
 	User                 string   `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Time                 uint32   `protobuf:"varint,3,opt,name=time,proto3" json:"time,omitempty"`
+	Time                 int64    `protobuf:"varint,3,opt,name=time,proto3" json:"time,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -81,7 +81,7 @@ func (m *ChatEntity) GetMessage() string {
 	return ""
 }
 
-func (m *ChatEntity) GetTime() uint32 {
+func (m *ChatEntity) GetTime() int64 {
 	if m != nil {
 		return m.Time
 	}
@@ -174,31 +174,80 @@ func (m *GetChatsResponse) GetChats() []*ChatEntity {
 	return nil
 }
 
+type InsertChatResponse struct {
+	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InsertChatResponse) Reset()         { *m = InsertChatResponse{} }
+func (m *InsertChatResponse) String() string { return proto.CompactTextString(m) }
+func (*InsertChatResponse) ProtoMessage()    {}
+func (*InsertChatResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8c585a45e2093e54, []int{3}
+}
+func (m *InsertChatResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *InsertChatResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_InsertChatResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *InsertChatResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InsertChatResponse.Merge(m, src)
+}
+func (m *InsertChatResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *InsertChatResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InsertChatResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InsertChatResponse proto.InternalMessageInfo
+
+func (m *InsertChatResponse) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*ChatEntity)(nil), "pb.ChatEntity")
 	proto.RegisterType((*GetChatsRequest)(nil), "pb.GetChatsRequest")
 	proto.RegisterType((*GetChatsResponse)(nil), "pb.GetChatsResponse")
+	proto.RegisterType((*InsertChatResponse)(nil), "pb.InsertChatResponse")
 }
 
 func init() { proto.RegisterFile("chat.proto", fileDescriptor_8c585a45e2093e54) }
 
 var fileDescriptor_8c585a45e2093e54 = []byte{
-	// 233 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x44, 0x8f, 0xc1, 0x4a, 0xf4, 0x30,
-	0x14, 0x85, 0xc9, 0xcc, 0xff, 0x2b, 0x5e, 0x51, 0xc7, 0xac, 0xc2, 0x20, 0xa5, 0x14, 0x17, 0xdd,
-	0xd8, 0x82, 0x6e, 0x5c, 0x2b, 0xe2, 0xce, 0x45, 0xdf, 0x20, 0x19, 0xae, 0x69, 0xc0, 0xe6, 0xc6,
-	0xb9, 0xb7, 0x0b, 0xdf, 0xc8, 0x47, 0x71, 0xe9, 0x23, 0x48, 0x9f, 0x44, 0x9a, 0x22, 0xb3, 0x3b,
-	0xe7, 0xcb, 0x47, 0x38, 0x17, 0x60, 0xd7, 0x5b, 0x69, 0xd2, 0x9e, 0x84, 0xf4, 0x2a, 0xb9, 0xed,
-	0x95, 0x27, 0xf2, 0x6f, 0xd8, 0xda, 0x14, 0x5a, 0x1b, 0x23, 0x89, 0x95, 0x40, 0x91, 0x17, 0x63,
-	0x7b, 0xe3, 0x83, 0xf4, 0xa3, 0x6b, 0x76, 0x34, 0xb4, 0x9e, 0x3c, 0xb5, 0x19, 0xbb, 0xf1, 0x35,
-	0xb7, 0x5c, 0x72, 0x5a, 0xf4, 0xea, 0x05, 0xe0, 0xb1, 0xb7, 0xf2, 0x14, 0x25, 0xc8, 0x87, 0xd6,
-	0xf0, 0x6f, 0x64, 0xdc, 0x1b, 0x55, 0xaa, 0xfa, 0xa4, 0xcb, 0x59, 0x1b, 0x38, 0x1e, 0x90, 0xd9,
-	0x7a, 0x34, 0xab, 0x8c, 0xff, 0xea, 0x6c, 0x4b, 0x18, 0xd0, 0xac, 0x4b, 0x55, 0x9f, 0x75, 0x39,
-	0x57, 0x97, 0x70, 0xf1, 0x8c, 0x32, 0x7f, 0xc9, 0x1d, 0xbe, 0x8f, 0xc8, 0x52, 0xdd, 0xc3, 0xe6,
-	0x80, 0x38, 0x51, 0x64, 0xd4, 0xd7, 0xf0, 0x7f, 0xbe, 0x8a, 0x8d, 0x2a, 0xd7, 0xf5, 0xe9, 0xed,
-	0x79, 0x93, 0x5c, 0x73, 0xd8, 0xd1, 0x2d, 0x8f, 0x0f, 0x9b, 0xcf, 0xa9, 0x50, 0x5f, 0x53, 0xa1,
-	0xbe, 0xa7, 0x42, 0xfd, 0x4c, 0x85, 0x72, 0x47, 0x79, 0xf5, 0xdd, 0x6f, 0x00, 0x00, 0x00, 0xff,
-	0xff, 0xd3, 0x72, 0x86, 0x1a, 0x14, 0x01, 0x00, 0x00,
+	// 254 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x44, 0x8f, 0x41, 0x4a, 0xc4, 0x40,
+	0x10, 0x45, 0xe9, 0x89, 0x3a, 0x5a, 0x82, 0x8e, 0xbd, 0x6a, 0x06, 0x09, 0x21, 0xb8, 0xc8, 0xc6,
+	0x04, 0x74, 0xe3, 0x5a, 0x11, 0x71, 0xe3, 0x22, 0x37, 0xe8, 0x84, 0xb2, 0x13, 0x30, 0xdd, 0x31,
+	0x55, 0x59, 0x78, 0x23, 0x8f, 0xe2, 0xd2, 0x23, 0x48, 0x4e, 0x22, 0xa9, 0x30, 0x33, 0xbb, 0xff,
+	0x7e, 0xff, 0x6a, 0xfe, 0x07, 0xa8, 0x1b, 0xcb, 0x79, 0x3f, 0x04, 0x0e, 0x7a, 0xd5, 0x57, 0xdb,
+	0x6b, 0x17, 0x82, 0xfb, 0xc0, 0xc2, 0xf6, 0x6d, 0x61, 0xbd, 0x0f, 0x6c, 0xb9, 0x0d, 0x9e, 0x96,
+	0xc4, 0xf6, 0xd6, 0xb5, 0xdc, 0x8c, 0x55, 0x5e, 0x87, 0xae, 0x70, 0xc1, 0x85, 0x42, 0xec, 0x6a,
+	0x7c, 0x17, 0x12, 0x10, 0xb5, 0xc4, 0xd3, 0x37, 0x80, 0xa7, 0xc6, 0xf2, 0xb3, 0xe7, 0x96, 0xbf,
+	0xb4, 0x86, 0xa3, 0x91, 0x70, 0x30, 0x2a, 0x51, 0xd9, 0x59, 0x29, 0x5a, 0x1b, 0x58, 0x77, 0x48,
+	0x64, 0x1d, 0x9a, 0x95, 0xd8, 0x3b, 0x9c, 0xd3, 0xdc, 0x76, 0x68, 0xa2, 0x44, 0x65, 0x51, 0x29,
+	0x3a, 0xbd, 0x82, 0xcb, 0x17, 0xe4, 0xf9, 0x4b, 0x2a, 0xf1, 0x73, 0x44, 0xe2, 0xf4, 0x01, 0x36,
+	0x07, 0x8b, 0xfa, 0xe0, 0x09, 0xf5, 0x0d, 0x1c, 0xcf, 0xab, 0xc8, 0xa8, 0x24, 0xca, 0xce, 0xef,
+	0x2e, 0xf2, 0xbe, 0xca, 0x0f, 0x3d, 0xca, 0xe5, 0x31, 0xcd, 0x41, 0xbf, 0x7a, 0xc2, 0x41, 0x8e,
+	0xf7, 0xb7, 0x06, 0xd6, 0x34, 0xd6, 0x35, 0x12, 0x49, 0xcf, 0xd3, 0x72, 0x87, 0x8f, 0x9b, 0xef,
+	0x29, 0x56, 0x3f, 0x53, 0xac, 0x7e, 0xa7, 0x58, 0xfd, 0x4d, 0xb1, 0xaa, 0x4e, 0x64, 0xe5, 0xfd,
+	0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb5, 0x59, 0x0d, 0x28, 0x44, 0x01, 0x00, 0x00,
 }
 
 func (this *ChatEntity) Equal(that interface{}) bool {
@@ -284,6 +333,33 @@ func (this *GetChatsResponse) Equal(that interface{}) bool {
 		if !this.Chats[i].Equal(that1.Chats[i]) {
 			return false
 		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *InsertChatResponse) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*InsertChatResponse)
+	if !ok {
+		that2, ok := that.(InsertChatResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Success != that1.Success {
+		return false
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
@@ -404,6 +480,43 @@ func (m *GetChatsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *InsertChatResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *InsertChatResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InsertChatResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Success {
+		i--
+		if m.Success {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintChat(dAtA []byte, offset int, v uint64) int {
 	offset -= sovChat(v)
 	base := offset
@@ -461,6 +574,21 @@ func (m *GetChatsResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovChat(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *InsertChatResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Success {
+		n += 2
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -581,7 +709,7 @@ func (m *ChatEntity) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Time |= uint32(b&0x7F) << shift
+				m.Time |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -728,6 +856,80 @@ func (m *GetChatsResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipChat(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthChat
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthChat
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *InsertChatResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowChat
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: InsertChatResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: InsertChatResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Success", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChat
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Success = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipChat(dAtA[iNdEx:])

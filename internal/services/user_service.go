@@ -6,7 +6,7 @@ import (
 	"github.com/oddx-team/odd-game-server/pb"
 )
 
-func (s *service) GetUser(_ context.Context, req *pb.GetUserRequest) (*pb.GetUserResponse, error) {
+func (s *Service) GetUser(_ context.Context, req *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	email := req.Email
 	return &pb.GetUserResponse{
 		User: &pb.UserEntity{
@@ -16,7 +16,7 @@ func (s *service) GetUser(_ context.Context, req *pb.GetUserRequest) (*pb.GetUse
 	}, nil
 }
 
-func (s *service) GetUsers(_ context.Context, _ *pb.GetUsersRequest) (*pb.GetUsersResponse, error) {
+func (s *Service) GetUsers(_ context.Context, _ *pb.GetUsersRequest) (*pb.GetUsersResponse, error) {
 	return &pb.GetUsersResponse{
 		Users: nil,
 	}, nil

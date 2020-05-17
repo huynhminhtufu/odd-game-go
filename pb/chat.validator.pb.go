@@ -7,8 +7,8 @@ import (
 	fmt "fmt"
 	math "math"
 	proto "github.com/gogo/protobuf/proto"
-	_ "github.com/gogo/protobuf/gogoproto"
 	_ "github.com/gogo/googleapis/google/api"
+	_ "github.com/gogo/protobuf/gogoproto"
 	github_com_mwitkow_go_proto_validators "github.com/mwitkow/go-proto-validators"
 )
 
@@ -31,5 +31,8 @@ func (this *GetChatsResponse) Validate() error {
 			}
 		}
 	}
+	return nil
+}
+func (this *InsertChatResponse) Validate() error {
 	return nil
 }

@@ -1,9 +1,13 @@
 package config
 
 import (
-	"log"
+	"github.com/oddx-team/odd-game-server/pkg/l"
 
 	"github.com/spf13/viper"
+)
+
+var (
+	ll = l.New()
 )
 
 type Config struct {
@@ -24,16 +28,16 @@ func Load() *Config {
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal("Failed to read viper config", err)
+		ll.Panic("Failed to read viper config", l.Error(err))
 	}
 
 	viper.AutomaticEnv()
 
 	err = viper.Unmarshal(&cfg)
 	if err != nil {
-		log.Fatal("Failed to unmarshal config", err)
+		ll.Panic("Failed to unmarshal config", l.Error(err))
 	}
 
-	log.Println("Config loaded")
+	ll.Info("Config loaded")
 	return cfg
 }
