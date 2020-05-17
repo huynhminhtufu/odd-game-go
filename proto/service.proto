@@ -53,19 +53,19 @@ service Odd {
 message LivenessRequest {}
 
 message LivenessResponse {
-  string message = 1 [json_name = "message"];
+  string message = 1;
 }
 
 message ToggleReadinessRequest {}
 
 message ToggleReadinessResponse {
-  string message = 1 [json_name = "message"];
+  string message = 1; 
 }
 
 message ReadinessRequest {}
 
 message ReadinessResponse {
-  string message = 1 [json_name = "message"];
+  string message = 1; 
 }
 
 message VersionRequest {

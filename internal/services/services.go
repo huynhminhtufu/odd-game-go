@@ -39,7 +39,7 @@ func (s *service) Version(_ context.Context, _ *pb.VersionRequest) (*pb.VersionR
 	}, nil
 }
 
-func (s *service) Liveness(_ context.Context, _ *pb.LivenessRequest) (*pb.LivenessResponse, error) {
+func (s *service) Liveness(context context.Context, _ *pb.LivenessRequest) (*pb.LivenessResponse, error) {
 	osSignal := make(chan os.Signal, 1)
 	signal.Notify(osSignal, syscall.SIGINT, syscall.SIGTERM)
 	select {

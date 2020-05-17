@@ -163,7 +163,10 @@ func local_request_Odd_GetUser_0(ctx context.Context, marshaler runtime.Marshale
 	var protoReq GetUserRequest
 	var metadata runtime.ServerMetadata
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_Odd_GetUser_0); err != nil {
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Odd_GetUser_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -504,7 +507,7 @@ func RegisterOddHandlerClient(ctx context.Context, mux *runtime.ServeMux, client
 var (
 	pattern_Odd_Version_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Odd_Liveness_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"headth"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Odd_Liveness_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"health"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_Odd_ToggleReadiness_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"ready"}, "", runtime.AssumeColonVerbOpt(true)))
 

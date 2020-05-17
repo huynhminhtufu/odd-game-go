@@ -33,7 +33,7 @@
         ]
       }
     },
-    "/headth": {
+    "/health": {
       "get": {
         "operationId": "Odd_Liveness",
         "responses": {

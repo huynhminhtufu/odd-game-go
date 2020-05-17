@@ -3,12 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	grpcmiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpcprometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
-	"github.com/oddx-team/odd-game-server/config"
-	"github.com/oddx-team/odd-game-server/internal/server"
-	"github.com/oddx-team/odd-game-server/internal/services"
-	"github.com/oddx-team/odd-game-server/pb"
 	"log"
 	"net"
 	"os"
@@ -16,6 +10,13 @@ import (
 	"strconv"
 	"syscall"
 	"time"
+
+	grpcmiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpcprometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/oddx-team/odd-game-server/config"
+	"github.com/oddx-team/odd-game-server/internal/server"
+	"github.com/oddx-team/odd-game-server/internal/services"
+	"github.com/oddx-team/odd-game-server/pb"
 
 	"google.golang.org/grpc"
 )
@@ -44,9 +45,9 @@ func main() {
 		signal.Notify(osSignal, syscall.SIGINT, syscall.SIGTERM)
 		<-osSignal
 		ctxCancel()
-		// Wait for maximum 15s
+		// Wait for maximum 1s
 		go func() {
-			var duration time.Duration = 15
+			var duration time.Duration = 1
 			timer := time.NewTimer(duration * time.Second)
 			<-timer.C
 			log.Fatal("Force shutdown due to timeout")
