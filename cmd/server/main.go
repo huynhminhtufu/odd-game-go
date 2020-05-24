@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
+	"github.com/oddx-team/odd-game-server/internal/websocket"
+	"github.com/oddx-team/odd-game-server/pkg/l"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"strconv"
@@ -19,6 +21,10 @@ import (
 	"github.com/oddx-team/odd-game-server/pb"
 
 	"google.golang.org/grpc"
+)
+
+var (
+	ll = l.New()
 )
 
 func main() {
@@ -50,27 +56,34 @@ func main() {
 			var duration time.Duration = 1
 			timer := time.NewTimer(duration * time.Second)
 			<-timer.C
-			log.Fatal("Force shutdown due to timeout")
+			ll.Fatal("Force shutdown due to timeout")
 		}()
 	}()
 
+	// Websocket module init
+	wsHub := websocket.NewHub(svc)
+	go wsHub.Run()
+
 	go func() {
-		gw := server.NewServer(cfg)
-		log.Println("Started HTTP server at port " + strconv.Itoa(cfg.HttpAddress))
+		wsHandler := func(w http.ResponseWriter, req *http.Request) {
+			websocket.ServeWs(wsHub, w, req)
+		}
+		gw := server.NewServer(cfg, wsHandler)
+		ll.Info("Started HTTP server at port " + strconv.Itoa(cfg.HttpAddress))
 		err := gw.RunGRPCGateway()
 		if err != nil {
-			log.Println("Cannot start server")
+			ll.Error("Cannot start server")
 			return
 		}
 	}()
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.GRPCAddress))
-	log.Println("Started gRPC server at port " + strconv.Itoa(cfg.GRPCAddress))
+	ll.Info("Started gRPC server at port " + strconv.Itoa(cfg.GRPCAddress))
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		ll.Error("Failed to listen: " + err.Error())
 	}
 
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
+		ll.Error("Failed to serve: " + err.Error())
 	}
 }

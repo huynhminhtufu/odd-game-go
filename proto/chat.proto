@@ -12,11 +12,15 @@ option (gogoproto.marshaler_all) = true;
 message ChatEntity {
   string user = 1;
   string message = 2;
-  uint32 time = 3;
+  int64 time = 3;
 }
 
 message GetChatsRequest {}
 
 message GetChatsResponse {
   repeated ChatEntity chats = 1;
+}
+
+message InsertChatResponse {
+  bool success = 1;
 }

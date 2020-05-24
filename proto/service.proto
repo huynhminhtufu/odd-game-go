@@ -42,6 +42,10 @@ service Odd {
     option (google.api.http) = {get: "/chats"};
   }
 
+  rpc InsertChat(ChatEntity) returns (InsertChatResponse) {
+    option (google.api.http) = {post: "/chats"};
+  }
+
   rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
     option (google.api.http) = {get: "/users"};
   }

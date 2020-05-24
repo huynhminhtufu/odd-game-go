@@ -18,11 +18,13 @@ type server struct {
 	Addrs        []string // Addresses on which the server listens for new connection
 	inShutdown   uint32   // Indicates whether the server is in shutdown or not
 	requestCount int32    // Counter holds no. of request in progress
+	wsHandler	 func(w http.ResponseWriter, req *http.Request) // Websocket Handler
 }
 
-func NewServer(cfg *config.Config) *server {
+func NewServer(cfg *config.Config, wsHandler func(w http.ResponseWriter, req *http.Request)) *server {
 	return &server{
 		cfg: cfg,
+		wsHandler: wsHandler,
 	}
 }
 
@@ -44,6 +46,7 @@ func (s *server) RunGRPCGateway() (err error) {
 		promhttp.Handler().ServeHTTP(w, r)
 	})
 	muxHttp.Handle("/", utils.ForwardAccessToken(mux))
+	muxHttp.HandleFunc("/ws", s.wsHandler)
 
 	return http.ListenAndServe(fmt.Sprintf(":%d", s.cfg.HttpAddress), muxHttp)
 }
