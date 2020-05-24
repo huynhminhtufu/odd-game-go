@@ -2,19 +2,16 @@ package services
 
 import (
 	"context"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"time"
 
+	"github.com/oddx-team/odd-game-server/internal/constants"
 	"github.com/oddx-team/odd-game-server/pb"
 )
 
-const chatCollection = "chats"
-
-func (s *Service) GetChats(_ context.Context, _ *pb.GetChatsRequest) (*pb.GetChatsResponse, error) {
-	chatCollection := s.mongo.Collection(chatCollection)
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+func (s *Service) GetChats(ctx context.Context, _ *pb.GetChatsRequest) (*pb.GetChatsResponse, error) {
+	chatCollection := s.mongo.Collection(constants.ChatCollection)
 	findOptions := options.Find()
 	findOptions.SetSort(map[string]int{"$natural": -1})
 	findOptions.SetLimit(50)
@@ -42,10 +39,8 @@ func (s *Service) GetChats(_ context.Context, _ *pb.GetChatsRequest) (*pb.GetCha
 	}, nil
 }
 
-func (s *Service) InsertChat(_ context.Context, newChat *pb.ChatEntity) (*pb.InsertChatResponse, error) {
-	chatCollection := s.mongo.Collection(chatCollection)
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+func (s *Service) InsertChat(ctx context.Context, newChat *pb.ChatEntity) (*pb.InsertChatResponse, error) {
+	chatCollection := s.mongo.Collection(constants.ChatCollection)
 
 	_, err := chatCollection.InsertOne(ctx, newChat)
 	if err != nil {

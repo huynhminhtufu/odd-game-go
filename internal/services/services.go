@@ -3,12 +3,14 @@ package services
 import (
 	"context"
 	"errors"
-	"go.mongodb.org/mongo-driver/mongo"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"go.mongodb.org/mongo-driver/mongo"
+
 	"github.com/oddx-team/odd-game-server/config"
+	"github.com/oddx-team/odd-game-server/internal/stores"
 	"github.com/oddx-team/odd-game-server/pb"
 )
 
@@ -28,11 +30,12 @@ type Service struct {
 }
 
 func NewService(cfg *config.Config) *Service {
+	mongo := stores.NewMongoConnection(cfg)
 	return &Service{
 		isReady:        true,
 		cfg:            cfg,
 		readinessCheck: DefaultReadinessCheck,
-		mongo: cfg.NewMongoConnection(cfg.Mongo.Host, cfg.Mongo.DatabaseName),
+		mongo:          mongo,
 	}
 }
 
