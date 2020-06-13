@@ -114,6 +114,7 @@ if already joined:
 {
   "operation": "join_room",
   "room_id": 1,
+  "player_id": 1,
   "password": "1234qwer"
 }
 ```
@@ -154,6 +155,7 @@ Response:
 {
   "operation": "spectate_room",
   "room_id": 1,
+  "player_id": 1,
   "password": "1234qwer"
 }
 ```
@@ -182,7 +184,8 @@ Response:
 ```json
 {
   "operation": "quit_room",
-  "room_id": 1
+  "room_id": 1,
+  "player_id": 1
 }
 ```
 
