@@ -4,8 +4,8 @@
 
 #### GLOBAL EXCEPTION(occurs for all APIs):
 
-status=400, msg="invalid-params"
-status=400, msg="duplicated-requests"
+- status=400, msg="invalid-params"
+- status=400, msg="duplicated-requests"
 
 ### /api/profile
 
